@@ -6,6 +6,11 @@ function StarWarProvider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [data, setData] = useState([]);
   const [filterByName, setFilterByName] = useState({ name: '' });
+  const [filterByNumericValues, setFilterByNumericValues] = useState([{
+    column: 'population',
+    comparison: 'maior que',
+    value: 0,
+  }]);
 
   const fetchPlanets = async () => {
     const request = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
@@ -23,6 +28,11 @@ function StarWarProvider({ children }) {
     setFilterByName({ name: value });
   };
 
+  const submitFilterByNumericValues = (filters) => {
+    const { column, comparison, value } = filters;
+    setFilterByNumericValues([{ column, comparison, value }]);
+  };
+
   useEffect(() => {
     const { results } = data;
     if (results) {
@@ -30,9 +40,22 @@ function StarWarProvider({ children }) {
         .filter(
           (planet) => planet.name.toLowerCase().includes(filterByName.name.toLowerCase()),
         );
-      setPlanets(filteredPlanets);
+      const arrayFilter = filterByNumericValues.reduce((acumulador, filter) => acumulador
+        .filter((planet) => {
+          switch (filter.comparison) {
+          case 'maior que':
+            return planet[filter.column] > Number(filter.value);
+          case 'menor que':
+            return planet[filter.column] < Number(filter.value);
+          case 'igual a':
+            return planet[filter.column] === filter.value;
+          default:
+            return true;
+          }
+        }), filteredPlanets);
+      setPlanets(arrayFilter);
     }
-  }, [filterByName]);
+  }, [filterByName, filterByNumericValues]);
 
   return (
     <StarWarsContext.Provider
@@ -41,6 +64,7 @@ function StarWarProvider({ children }) {
         handleFilterByName,
         filterByName,
         data,
+        submitFilterByNumericValues,
       } }
     >
       {children}
