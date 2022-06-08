@@ -7,9 +7,9 @@ function StarWarProvider({ children }) {
   const [data, setData] = useState([]);
   const [filterByName, setFilterByName] = useState({ name: '' });
   const [filterByNumericValues, setFilterByNumericValues] = useState([{
-    column: 'population',
-    comparison: 'maior que',
-    value: 0,
+    column: '',
+    comparison: '',
+    value: '',
   }]);
 
   const fetchPlanets = async () => {
@@ -30,7 +30,7 @@ function StarWarProvider({ children }) {
 
   const submitFilterByNumericValues = (filters) => {
     const { column, comparison, value } = filters;
-    setFilterByNumericValues([{ column, comparison, value }]);
+    setFilterByNumericValues([...filterByNumericValues, { column, comparison, value }]);
   };
 
   useEffect(() => {
