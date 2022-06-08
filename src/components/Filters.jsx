@@ -1,22 +1,34 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Filters() {
-  const [filterByNumericValues, setFilterByNumericValues] = useState({
-    column: 'population',
-    comparison: 'maior que',
-    value: 0,
-  });
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [value, setValue] = useState(0);
+
+  const [columns, setColumns] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ]);
+
+  // const [comparisons, setComparisons] = useState([
+  //   'maior que', 'menor que', 'igual a',
+  // ]);
+
   const {
     filterByName,
     handleFilterByName,
     submitFilterByNumericValues,
+    filterByNumericValues,
   } = useContext(StarWarsContext);
 
-  const handleFilterByNumericValues = ({ target }) => {
-    const { id, value } = target;
-    setFilterByNumericValues({ ...filterByNumericValues, [id]: value });
-  };
+  useEffect(() => {
+    const verifyColumns = () => {
+      if (filterByNumericValues.length > 0) {
+        setColumns(columns.filter((type) => type !== column));
+      }
+    };
+    verifyColumns();
+  }, [submitFilterByNumericValues]);
 
   return (
     <nav>
@@ -36,14 +48,12 @@ function Filters() {
           <select
             id="column"
             data-testid="column-filter"
-            value={ filterByNumericValues.column }
-            onChange={ (e) => handleFilterByNumericValues(e) }
+            value={ column }
+            onChange={ (e) => setColumn(e.target.value) }
           >
-            <option value="population">population</option>
-            <option value="orbital_period">orbital_period</option>
-            <option value="diameter">diameter</option>
-            <option value="rotation_period">rotation_period</option>
-            <option value="surface_water">surface_water</option>
+            { columns.map((type) => (
+              <option key={ type } value={ type }>{ type }</option>
+            )) }
           </select>
         </label>
         <label htmlFor="comparison">
@@ -51,8 +61,8 @@ function Filters() {
           <select
             id="comparison"
             data-testid="comparison-filter"
-            value={ filterByNumericValues.comparison }
-            onChange={ (e) => handleFilterByNumericValues(e) }
+            value={ comparison }
+            onChange={ (e) => setComparison(e.target.value) }
           >
             <option value="maior que">maior que</option>
             <option value="menor que">menor que</option>
@@ -64,14 +74,14 @@ function Filters() {
             id="value"
             data-testid="value-filter"
             type="number"
-            value={ filterByNumericValues.value }
-            onChange={ (e) => handleFilterByNumericValues(e) }
+            value={ value }
+            onChange={ (e) => setValue(e.target.value) }
           />
         </label>
         <div>
           <button
             type="button"
-            onClick={ () => submitFilterByNumericValues(filterByNumericValues) }
+            onClick={ () => submitFilterByNumericValues({ column, comparison, value }) }
             data-testid="button-filter"
           >
             FILTRAR

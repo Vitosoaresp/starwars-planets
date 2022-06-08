@@ -3,14 +3,10 @@ import PropTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
 
 function StarWarProvider({ children }) {
-  const [planets, setPlanets] = useState([]);
   const [data, setData] = useState([]);
+  const [planets, setPlanets] = useState([]);
   const [filterByName, setFilterByName] = useState({ name: '' });
-  const [filterByNumericValues, setFilterByNumericValues] = useState([{
-    column: '',
-    comparison: '',
-    value: '',
-  }]);
+  const [filterByNumericValues, setFilterByNumericValues] = useState([]);
 
   const fetchPlanets = async () => {
     const request = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
@@ -65,6 +61,7 @@ function StarWarProvider({ children }) {
         filterByName,
         data,
         submitFilterByNumericValues,
+        filterByNumericValues,
       } }
     >
       {children}
