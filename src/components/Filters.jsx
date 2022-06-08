@@ -10,25 +10,43 @@ function Filters() {
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
   ]);
 
-  // const [comparisons, setComparisons] = useState([
-  //   'maior que', 'menor que', 'igual a',
-  // ]);
+  const COLUMNS = [
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ];
 
   const {
     filterByName,
     handleFilterByName,
     submitFilterByNumericValues,
     filterByNumericValues,
+    setFilterByNumericValues,
   } = useContext(StarWarsContext);
 
   useEffect(() => {
     const verifyColumns = () => {
       if (filterByNumericValues.length > 0) {
-        setColumns(columns.filter((type) => type !== column));
+        setColumns(columns.filter((type) => !filterByNumericValues
+          .some(({ column: a }) => type === a)));
+      } else {
+        setColumns(COLUMNS);
       }
     };
     verifyColumns();
-  }, [submitFilterByNumericValues]);
+  }, [filterByNumericValues, setFilterByNumericValues]);
+
+  const removeFilter = (index) => {
+    const currentFilters = [...filterByNumericValues];
+    currentFilters.splice(index, 1);
+    setFilterByNumericValues(currentFilters);
+  };
+
+  const formSubmit = (filterType) => {
+    submitFilterByNumericValues(filterType);
+    const index = columns.indexOf(column) + 1;
+    if (columns.length > index) {
+      setColumn(columns[index]);
+    }
+  };
 
   return (
     <nav>
@@ -81,13 +99,37 @@ function Filters() {
         <div>
           <button
             type="button"
-            onClick={ () => submitFilterByNumericValues({ column, comparison, value }) }
+            onClick={ () => formSubmit({ column, comparison, value }) }
             data-testid="button-filter"
           >
             FILTRAR
           </button>
+          <button
+            type="button"
+            data-testid="button-remove-filters"
+            onClick={ () => setFilterByNumericValues([]) }
+          >
+            Remover Filtros
+          </button>
         </div>
       </div>
+      <section>
+        <div>
+          { filterByNumericValues.map((filter, index) => (
+            <div key={ filter.column } data-testid="filter">
+              <span>{ filter.column }</span>
+              <span>{ filter.comparison }</span>
+              <span>{ filter.value }</span>
+              <button
+                type="button"
+                onClick={ () => removeFilter(index) }
+              >
+                Excluir
+              </button>
+            </div>
+          ))}
+        </div>
+      </section>
     </nav>
   );
 }

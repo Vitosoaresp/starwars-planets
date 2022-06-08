@@ -36,7 +36,7 @@ function StarWarProvider({ children }) {
         .filter(
           (planet) => planet.name.toLowerCase().includes(filterByName.name.toLowerCase()),
         );
-      const arrayFilter = filterByNumericValues.reduce((acumulador, filter) => acumulador
+      setPlanets(filterByNumericValues.reduce((acumulador, filter) => acumulador
         .filter((planet) => {
           switch (filter.comparison) {
           case 'maior que':
@@ -48,8 +48,7 @@ function StarWarProvider({ children }) {
           default:
             return true;
           }
-        }), filteredPlanets);
-      setPlanets(arrayFilter);
+        }), filteredPlanets));
     }
   }, [filterByName, filterByNumericValues]);
 
@@ -62,6 +61,7 @@ function StarWarProvider({ children }) {
         data,
         submitFilterByNumericValues,
         filterByNumericValues,
+        setFilterByNumericValues,
       } }
     >
       {children}
