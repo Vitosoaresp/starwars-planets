@@ -7,6 +7,7 @@ function StarWarProvider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [filterByName, setFilterByName] = useState({ name: '' });
   const [filterByNumericValues, setFilterByNumericValues] = useState([]);
+  const [order, setOrder] = useState({ column: 'population', sort: 'ASC' });
 
   const fetchPlanets = async () => {
     const request = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
@@ -15,7 +16,10 @@ function StarWarProvider({ children }) {
   };
 
   useEffect(() => {
-    fetchPlanets().then((result) => setPlanets(result.results));
+    fetchPlanets().then((result) => {
+      const planetsAPI = result.results;
+      return setPlanets([...planetsAPI]);
+    });
     fetchPlanets().then((json) => setData(json));
   }, []);
 
@@ -62,6 +66,9 @@ function StarWarProvider({ children }) {
         submitFilterByNumericValues,
         filterByNumericValues,
         setFilterByNumericValues,
+        order,
+        setOrder,
+        setPlanets,
       } }
     >
       {children}

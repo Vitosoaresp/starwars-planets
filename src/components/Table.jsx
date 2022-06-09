@@ -1,8 +1,22 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { planets } = useContext(StarWarsContext);
+  const { planets, data, setPlanets } = useContext(StarWarsContext);
+  const A_MENOR_B = -1;
+
+  useEffect(() => {
+    const initialSort = planets.sort((a, b) => {
+      if (a.name < b.name) {
+        return A_MENOR_B;
+      }
+      if (a.name > b.name) {
+        return 1;
+      }
+      return 0;
+    });
+    setPlanets([...initialSort]);
+  }, [data]);
 
   return (
     <table>
@@ -52,7 +66,7 @@ function Table() {
           url,
         }) => (
           <tr key={ name }>
-            <td>{name}</td>
+            <td data-testid="planet-name">{name}</td>
             <td>{rotationPeriod}</td>
             <td>{orbitalPeriod}</td>
             <td>{diameter}</td>
