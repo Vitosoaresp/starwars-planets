@@ -16,22 +16,9 @@ function StarWarProvider({ children }) {
   };
 
   useEffect(() => {
-    fetchPlanets().then((result) => {
-      const planetsAPI = result.results;
-      return setPlanets([...planetsAPI]);
-    });
+    fetchPlanets().then((result) => setPlanets(result.results));
     fetchPlanets().then((json) => setData(json));
   }, []);
-
-  const handleFilterByName = ({ target }) => {
-    const { value } = target;
-    setFilterByName({ name: value });
-  };
-
-  const submitFilterByNumericValues = (filters) => {
-    const { column, comparison, value } = filters;
-    setFilterByNumericValues([...filterByNumericValues, { column, comparison, value }]);
-  };
 
   useEffect(() => {
     const { results } = data;
@@ -60,10 +47,9 @@ function StarWarProvider({ children }) {
     <StarWarsContext.Provider
       value={ {
         planets,
-        handleFilterByName,
+        setFilterByName,
         filterByName,
         data,
-        submitFilterByNumericValues,
         filterByNumericValues,
         setFilterByNumericValues,
         order,

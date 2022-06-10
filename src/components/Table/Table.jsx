@@ -4,12 +4,12 @@ import './Table.css';
 
 function Table() {
   const { planets, data, setPlanets } = useContext(StarWarsContext);
-  const A_MENOR_B = -1;
+  const MENOS_UM = -1;
 
   useEffect(() => {
     const initialSort = planets.sort((a, b) => {
       if (a.name < b.name) {
-        return A_MENOR_B;
+        return MENOS_UM;
       }
       if (a.name > b.name) {
         return 1;

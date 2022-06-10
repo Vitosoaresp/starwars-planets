@@ -17,8 +17,7 @@ function Filters() {
 
   const {
     filterByName,
-    handleFilterByName,
-    submitFilterByNumericValues,
+    setFilterByName,
     filterByNumericValues,
     setFilterByNumericValues,
   } = useContext(StarWarsContext);
@@ -41,18 +40,18 @@ function Filters() {
     setFilterByNumericValues(currentFilters);
   };
 
-  const formSubmit = (filterType) => {
-    submitFilterByNumericValues(filterType);
+  const formSubmit = (filterTypes) => {
+    const { column: coluna, comparison: comparação, value: valor } = filterTypes;
+    setFilterByNumericValues([...filterByNumericValues, {
+      column: coluna,
+      comparison: comparação,
+      value: valor,
+    }]);
     const index = columns.indexOf(column) + 1;
     if (columns.length > index) {
       setColumn(columns[index]);
     }
   };
-
-  // const submitFilterByNumericValues = (filters) => {
-  //   const { column, comparison, value } = filters;
-  //   setFilterByNumericValues([...filterByNumericValues, { column, comparison, value }]);
-  // };
 
   return (
     <section className="fiters-container">
@@ -62,7 +61,7 @@ function Filters() {
             id="name-filter"
             data-testid="name-filter"
             value={ filterByName.name }
-            onChange={ (e) => handleFilterByName(e) }
+            onChange={ ({ target }) => setFilterByName({ name: target.value }) }
             placeholder="Busque por nome"
           />
         </label>
