@@ -1,5 +1,6 @@
 .table {
   border-spacing: unset;
+  height: 100vh;
   width: 100%;
 }
 
@@ -7,6 +8,7 @@
   background-color: var(--main-black);
   color: var(--white);
   font-weight: 800;
+  height: 50px;
 }
 
 .table-head th {
@@ -18,6 +20,10 @@
   color: var(--white);
   font-weight: 500;
   text-align: center;
+}
+
+.table-body tr td {
+  width: 10%;
 }
 
 .table-body tr:nth-child( 2n ) {

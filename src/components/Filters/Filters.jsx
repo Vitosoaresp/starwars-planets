@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { BsTrashFill, BsSearch } from 'react-icons/bs';
 import StarWarsContext from '../../context/StarWarsContext';
 import Order from '../Order/Order';
 import './Filters.css';
@@ -56,7 +57,8 @@ function Filters() {
   return (
     <section className="fiters-container">
       <div className="filter-name-container">
-        <label htmlFor="name-filter">
+        <label htmlFor="name-filter" className="filter-name">
+          <BsSearch className="search-icon" />
           <input
             id="name-filter"
             data-testid="name-filter"
@@ -102,25 +104,26 @@ function Filters() {
             onChange={ ({ target }) => setValue(target.value) }
           />
         </label>
+        <div className="filter-buttons-container">
+          <button
+            type="button"
+            className="btn"
+            onClick={ () => formSubmit({ column, comparison, value }) }
+            data-testid="button-filter"
+          >
+            FILTRAR
+          </button>
+          <button
+            className="btn"
+            type="button"
+            data-testid="button-remove-filters"
+            onClick={ () => setFilterByNumericValues([]) }
+          >
+            Remover Filtros
+          </button>
+        </div>
       </div>
-      <div className="filter-buttons-container">
-        <button
-          type="button"
-          className="btn"
-          onClick={ () => formSubmit({ column, comparison, value }) }
-          data-testid="button-filter"
-        >
-          FILTRAR
-        </button>
-        <button
-          className="btn"
-          type="button"
-          data-testid="button-remove-filters"
-          onClick={ () => setFilterByNumericValues([]) }
-        >
-          Remover Filtros
-        </button>
-      </div>
+
       <Order />
       <section className="filters-values-container">
         { filterByNumericValues.map((filter, index) => (
@@ -130,9 +133,10 @@ function Filters() {
             <span>{ filter.value }</span>
             <button
               type="button"
+              className="btn-trash"
               onClick={ () => removeFilter(index) }
             >
-              Excluir
+              <BsTrashFill />
             </button>
           </div>
         ))}

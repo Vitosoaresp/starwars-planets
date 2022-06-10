@@ -44,10 +44,6 @@ function Table() {
             Water
           </th>
           <th>Population</th>
-          <th>Films</th>
-          <th>Created</th>
-          <th>Edited</th>
-          <th>URL</th>
         </tr>
       </thead>
       <tbody className="table-body">
@@ -61,10 +57,6 @@ function Table() {
           terrain,
           surface_water: surfaceWater,
           population,
-          films,
-          created,
-          edited,
-          url,
         }) => (
           <tr key={ name }>
             <td data-testid="planet-name">{name}</td>
@@ -76,10 +68,6 @@ function Table() {
             <td>{terrain}</td>
             <td>{surfaceWater}</td>
             <td>{population}</td>
-            <td>{films}</td>
-            <td>{created}</td>
-            <td>{edited}</td>
-            <td>{url}</td>
           </tr>
         ))}
       </tbody>
