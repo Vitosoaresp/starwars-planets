@@ -7,7 +7,7 @@ function Filters() {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
-  const [columns, setColumns] = useState([
+  const [columnOptions, setColumnOptions] = useState([
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
   ]);
 
@@ -25,10 +25,10 @@ function Filters() {
   useEffect(() => {
     const verifyColumns = () => {
       if (filterByNumericValues.length > 0) {
-        setColumns(columns.filter((type) => !filterByNumericValues
-          .some(({ column: a }) => type === a)));
+        setColumnOptions(columnOptions.filter((type) => !filterByNumericValues
+          .some(({ column: filterColumnValue }) => type === filterColumnValue)));
       } else {
-        setColumns(COLUMNS);
+        setColumnOptions(COLUMNS);
       }
     };
     verifyColumns();
@@ -47,9 +47,9 @@ function Filters() {
       comparison: comparação,
       value: valor,
     }]);
-    const index = columns.indexOf(column) + 1;
-    if (columns.length > index) {
-      setColumn(columns[index]);
+    const index = columnOptions.indexOf(column) + 1;
+    if (columnOptions.length > index) {
+      setColumn(columnOptions[index]);
     }
   };
 
@@ -73,10 +73,10 @@ function Filters() {
             id="column"
             data-testid="column-filter"
             value={ column }
-            onChange={ (e) => setColumn(e.target.value) }
+            onChange={ ({ target }) => setColumn(target.value) }
           >
-            { columns.map((type) => (
-              <option key={ type } value={ type }>{ type }</option>
+            { columnOptions.map((option) => (
+              <option key={ option } value={ option }>{ option }</option>
             )) }
           </select>
         </label>
@@ -86,7 +86,7 @@ function Filters() {
             id="comparison"
             data-testid="comparison-filter"
             value={ comparison }
-            onChange={ (e) => setComparison(e.target.value) }
+            onChange={ ({ target }) => setComparison(target.value) }
           >
             <option value="maior que">maior que</option>
             <option value="menor que">menor que</option>
@@ -99,7 +99,7 @@ function Filters() {
             data-testid="value-filter"
             type="number"
             value={ value }
-            onChange={ (e) => setValue(e.target.value) }
+            onChange={ ({ target }) => setValue(target.value) }
           />
         </label>
       </div>
