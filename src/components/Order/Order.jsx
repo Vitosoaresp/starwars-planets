@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import StarWarsContext from '../context/StarWarsContext';
+import StarWarsContext from '../../context/StarWarsContext';
+import './Order.css';
 
 function Order() {
   const [columnSort, setcolumnSort] = useState('population');
@@ -23,9 +24,9 @@ function Order() {
   }, [order, setPlanets, setOrder]);
 
   return (
-    <div>
-      <div>
-        <label htmlFor="order">
+    <section className="order-container">
+      <div className="filter-options-container">
+        <label htmlFor="order" className="order-options">
           Ordenar
           <select
             id="order"
@@ -41,7 +42,7 @@ function Order() {
           </select>
         </label>
       </div>
-      <div>
+      <div className="order-type">
         <label htmlFor="asc">
           <input
             id="asc"
@@ -67,12 +68,13 @@ function Order() {
       </div>
       <button
         type="button"
+        className="btn"
         data-testid="column-sort-button"
         onClick={ () => setOrder({ column: columnSort, sort: sortType }) }
       >
         Ordenar
       </button>
-    </div>
+    </section>
   );
 }
 

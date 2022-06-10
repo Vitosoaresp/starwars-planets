@@ -1,0 +1,20 @@
+.order-container {
+  align-items: center;
+  background-color: var(--rich-black);
+  color: var(--white);
+  display: flex;
+  font-weight: 800;
+  justify-content: center;
+  width: 100%;
+}
+
+.order-type {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5rem;
+  padding: 0 0.5rem;
+}
+
+.order-options:active {
+  color: var(--yellow);
+}

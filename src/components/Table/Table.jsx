@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
-import StarWarsContext from '../context/StarWarsContext';
+import StarWarsContext from '../../context/StarWarsContext';
+import './Table.css';
 
 function Table() {
   const { planets, data, setPlanets } = useContext(StarWarsContext);
@@ -19,8 +20,8 @@ function Table() {
   }, [data]);
 
   return (
-    <table>
-      <thead>
+    <table className="table">
+      <thead className="table-head">
         <tr>
           <th>Name</th>
           <th>
@@ -49,7 +50,7 @@ function Table() {
           <th>URL</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody className="table-body">
         {planets && planets.map(({
           name,
           rotation_period: rotationPeriod,

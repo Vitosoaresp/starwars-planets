@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import StarWarsContext from '../context/StarWarsContext';
+import StarWarsContext from '../../context/StarWarsContext';
+import Order from '../Order/Order';
+import './Filters.css';
 
 function Filters() {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
-
   const [columns, setColumns] = useState([
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
   ]);
@@ -48,19 +49,25 @@ function Filters() {
     }
   };
 
+  // const submitFilterByNumericValues = (filters) => {
+  //   const { column, comparison, value } = filters;
+  //   setFilterByNumericValues([...filterByNumericValues, { column, comparison, value }]);
+  // };
+
   return (
-    <nav>
-      <div>
+    <section className="fiters-container">
+      <div className="filter-name-container">
         <label htmlFor="name-filter">
           <input
             id="name-filter"
             data-testid="name-filter"
             value={ filterByName.name }
             onChange={ (e) => handleFilterByName(e) }
+            placeholder="Busque por nome"
           />
         </label>
       </div>
-      <div>
+      <div className="filter-options-container">
         <label htmlFor="column">
           Coluna
           <select
@@ -96,41 +103,42 @@ function Filters() {
             onChange={ (e) => setValue(e.target.value) }
           />
         </label>
-        <div>
-          <button
-            type="button"
-            onClick={ () => formSubmit({ column, comparison, value }) }
-            data-testid="button-filter"
-          >
-            FILTRAR
-          </button>
-          <button
-            type="button"
-            data-testid="button-remove-filters"
-            onClick={ () => setFilterByNumericValues([]) }
-          >
-            Remover Filtros
-          </button>
-        </div>
       </div>
-      <section>
-        <div>
-          { filterByNumericValues.map((filter, index) => (
-            <div key={ filter.column } data-testid="filter">
-              <span>{ filter.column }</span>
-              <span>{ filter.comparison }</span>
-              <span>{ filter.value }</span>
-              <button
-                type="button"
-                onClick={ () => removeFilter(index) }
-              >
-                Excluir
-              </button>
-            </div>
-          ))}
-        </div>
+      <div className="filter-buttons-container">
+        <button
+          type="button"
+          className="btn"
+          onClick={ () => formSubmit({ column, comparison, value }) }
+          data-testid="button-filter"
+        >
+          FILTRAR
+        </button>
+        <button
+          className="btn"
+          type="button"
+          data-testid="button-remove-filters"
+          onClick={ () => setFilterByNumericValues([]) }
+        >
+          Remover Filtros
+        </button>
+      </div>
+      <Order />
+      <section className="filters-values-container">
+        { filterByNumericValues.map((filter, index) => (
+          <div key={ filter.column } data-testid="filter">
+            <span>{ filter.column }</span>
+            <span>{ filter.comparison }</span>
+            <span>{ filter.value }</span>
+            <button
+              type="button"
+              onClick={ () => removeFilter(index) }
+            >
+              Excluir
+            </button>
+          </div>
+        ))}
       </section>
-    </nav>
+    </section>
   );
 }
 
