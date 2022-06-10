@@ -1,16 +1,9 @@
-# 🚧 README em construção 🚧
+# STARWARS PLANETS
 
-<!-- Olá, Tryber!
+<div>
+  <img src="starwars.png" alt="foto do projeto starwars" />
+</div>
 
-Esse é apenas um arquivo inicial para o README do seu projeto.
+## Descrição
 
-É essencial que você preencha esse documento por conta própria, ok?
-
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-
-⚠️ IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
-
--->
+<p> uma lista com filtros de planetas do universo de Star Wars usando Context API e Hooks </p>
